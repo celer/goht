@@ -1263,6 +1263,7 @@ func (n *SilentScriptNode) allowChildren() bool {
 		}
 	}
 	if !allowChildren {
+		code = strings.TrimLeft(n.code, " \t}")
 		for _, statement := range elseStatements {
 			if strings.HasPrefix(code, statement) {
 				allowChildren = true
@@ -1284,13 +1285,7 @@ func (n *SilentScriptNode) Source(tw *templateWriter) error {
 
 	code := strings.TrimSpace(strings.Replace(n.code, "\n", " ", -1))
 
-	isOpening := false
-	for _, statement := range openingStatements {
-		if strings.HasPrefix(code, statement) {
-			isOpening = true
-			break
-		}
-	}
+	isOpening := n.allowChildren()
 
 	start := ""
 	end := "\n"
