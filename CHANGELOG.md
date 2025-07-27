@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v0.8.3](https://github.com/stackus/goht/compare/v0.8.2...v0.8.3) - 2025-07-25
+
+### Fixed
+
+- Non-HTML content will now be processed correctly when using EGO templates. Non-HTML content would cause an "unexpected character" error to be thrown.
+- Else statements will now be rendered correctly around all child statements. Previously, the 'else' statement was not being treated as an "opening" statement.
+
 ## [v0.8.2](https://github.com/stackus/goht/compare/v0.8.1...v0.8.2) - 2025-07-23
 
 ### Fixed
