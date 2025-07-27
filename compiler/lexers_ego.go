@@ -6,7 +6,7 @@ import (
 	"text/scanner"
 )
 
-func lexEgoStart(l *lexer) lexFn {
+func lexEgoStart(_ *lexer) lexFn {
 	return lexEgoLineStart(lexEgoText)
 }
 
@@ -36,9 +36,6 @@ func lexEgoLineStart(next lexFn) lexFn {
 		case scanner.EOF:
 			l.emit(tEOF)
 			return nil
-		case '\n', '\r':
-			l.acceptRun("\n\r")
-			return lexEgoLineStart(next)
 		case '\t':
 			// we require all templates to be indented with one tab; the rest of the line is content
 			l.skip()
@@ -70,6 +67,7 @@ func lexEgoText(l *lexer) lexFn {
 		l.acceptUntil("<\n\r")
 		switch l.peek() {
 		case '\n', '\r':
+			l.acceptRun("\n\r")
 			return lexEgoLineStart(lexEgoText)
 		case '<':
 			if l.peekAhead(2) == "<%" {
